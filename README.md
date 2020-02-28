@@ -1,4 +1,4 @@
-# weight-loss-tracker
+# Weight Loss Tracker
 
 PWA to track your weight loss journey
 
