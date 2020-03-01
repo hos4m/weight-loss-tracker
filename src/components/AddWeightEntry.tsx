@@ -1,29 +1,25 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import {
   IonInput,
   IonItem,
   IonLabel,
   IonText,
   IonDatetime,
-  IonChip,
+  IonButton,
   IonIcon,
-  IonRow,
-  IonGrid
+  IonGrid,
+  IonRow
 } from "@ionic/react";
-import { speedometerOutline } from "ionicons/icons";
+import { rocketOutline } from "ionicons/icons";
 
 export const AddWeightEntry: FC = () => {
-  return (
-    <>
-      <IonGrid>
-        <IonRow className="ion-justify-content-center">
-          <IonChip color="primary" outline className="ion-float-right">
-            <IonIcon icon={speedometerOutline} color="primary" />
-            <IonLabel>KG</IonLabel>
-          </IonChip>
-        </IonRow>
-      </IonGrid>
+  const onAdd = (e: SyntheticEvent) => {
+    e.preventDefault();
+    alert("test!");
+  };
 
+  return (
+    <form onSubmit={onAdd}>
       <IonItem>
         <IonLabel position="stacked">
           <IonText>Enter Weight</IonText>
@@ -38,8 +34,18 @@ export const AddWeightEntry: FC = () => {
         <IonDatetime
           displayFormat="DD MMMM YYYY"
           placeholder="Select Date"
+          value={new Date().toISOString()}
         ></IonDatetime>
       </IonItem>
-    </>
+
+      <IonGrid>
+        <IonRow className="ion-justify-content-center ion-margin-top">
+          <IonButton type="submit">
+            <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
+            <IonIcon icon={rocketOutline} />
+          </IonButton>
+        </IonRow>
+      </IonGrid>
+    </form>
   );
 };
