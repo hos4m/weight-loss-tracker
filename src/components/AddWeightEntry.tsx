@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from "react";
+import React, { FC, SyntheticEvent, useState } from "react";
 import {
   IonInput,
   IonItem,
@@ -8,14 +8,38 @@ import {
   IonButton,
   IonIcon,
   IonGrid,
-  IonRow
+  IonRow,
+  IonAlert
 } from "@ionic/react";
 import { rocketOutline } from "ionicons/icons";
+import { v4 as uuid } from "uuid";
+
+import { addWeight } from "../data/weight/addWeight";
 
 export const AddWeightEntry: FC = () => {
+  const [weightVal, setWeigtVal] = useState(0);
+  const [dateVal, setDateVal] = useState(new Date().toISOString());
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false);
+
   const onAdd = (e: SyntheticEvent) => {
     e.preventDefault();
-    alert("test!");
+    const result = addWeight({ id: uuid(), weightVal, date: dateVal });
+    if (!result) setIsErrorAlertVisible(true);
+  };
+
+  const renderAlert = () => {
+    if (!isErrorAlertVisible) return false;
+    return (
+      <IonAlert
+        isOpen
+        onDidDismiss={() => setIsErrorAlertVisible(false)}
+        header="Error!"
+        message={
+          "You have already added your weight for today, if you want to modify it please remove it from the list below first and then add it again."
+        }
+        buttons={["OK"]}
+      />
+    );
   };
 
   return (
@@ -24,7 +48,14 @@ export const AddWeightEntry: FC = () => {
         <IonLabel position="stacked">
           <IonText>Enter Weight</IonText>
         </IonLabel>
-        <IonInput autofocus required inputMode="decimal" type="number" />
+        <IonInput
+          autofocus
+          required
+          inputMode="decimal"
+          type="number"
+          value={weightVal}
+          onIonChange={e => setWeigtVal(Number(e.detail.value))}
+        />
       </IonItem>
 
       <IonItem>
@@ -34,7 +65,8 @@ export const AddWeightEntry: FC = () => {
         <IonDatetime
           displayFormat="DD MMMM YYYY"
           placeholder="Select Date"
-          value={new Date().toISOString()}
+          value={dateVal}
+          onIonChange={e => setDateVal(String(e.detail.value))}
         ></IonDatetime>
       </IonItem>
 
@@ -46,6 +78,8 @@ export const AddWeightEntry: FC = () => {
           </IonButton>
         </IonRow>
       </IonGrid>
+
+      {renderAlert()}
     </form>
   );
 };

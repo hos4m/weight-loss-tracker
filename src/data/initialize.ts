@@ -1,7 +1,7 @@
 import low from "lowdb";
 import LocalStorage from "lowdb/adapters/LocalStorage";
 
-const adapter = new LocalStorage("db");
+const adapter = new LocalStorage("weightlosstracker-db");
 
 export const db = low(adapter);
 
