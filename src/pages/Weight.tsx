@@ -9,6 +9,7 @@ import {
   IonRow
 } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
+import useForceUpdate from "use-force-update";
 
 import { AddWeightEntry, FadingWrapper, WeightsList } from "../components";
 import { getWeights } from "../data/weight";
@@ -16,6 +17,7 @@ import { getWeights } from "../data/weight";
 export const Weight: React.FC = () => {
   const [isAddWeightEntryVisible, setIsAddWeightEntryVisible] = useState(false);
   let weights = getWeights();
+  const forceUpdate = useForceUpdate();
 
   const addOnClick = () => {
     setIsAddWeightEntryVisible(!isAddWeightEntryVisible);
@@ -25,14 +27,17 @@ export const Weight: React.FC = () => {
     if (!isAddWeightEntryVisible) return null;
     return (
       <FadingWrapper>
-        <AddWeightEntry refreshList={refreshList} />
+        <AddWeightEntry
+          hide={() => setIsAddWeightEntryVisible(false)}
+          refreshList={refreshList}
+        />
       </FadingWrapper>
     );
   };
 
   const refreshList = () => {
-    setIsAddWeightEntryVisible(false);
     weights = getWeights();
+    forceUpdate();
   };
 
   const renderWeightEntries = () => {
@@ -56,7 +61,7 @@ export const Weight: React.FC = () => {
           </IonRow>
         </IonGrid>
       );
-    return <WeightsList weights={weights} />;
+    return <WeightsList weights={weights} refreshList={refreshList} />;
   };
 
   return (

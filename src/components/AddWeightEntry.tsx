@@ -17,10 +17,11 @@ import { v4 as uuid } from "uuid";
 import { addWeight } from "../data/weight/";
 
 interface Props {
+  hide: () => void;
   refreshList: () => void;
 }
 
-export const AddWeightEntry: FC<Props> = ({ refreshList }) => {
+export const AddWeightEntry: FC<Props> = ({ hide, refreshList }) => {
   const [weightVal, setWeigtVal] = useState(0);
   const [dateVal, setDateVal] = useState(new Date().toISOString());
   const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false);
@@ -28,8 +29,11 @@ export const AddWeightEntry: FC<Props> = ({ refreshList }) => {
   const onAdd = (e: SyntheticEvent) => {
     e.preventDefault();
     const result = addWeight({ id: uuid(), weightVal, date: dateVal });
-    if (result) refreshList();
     if (!result) setIsErrorAlertVisible(true);
+    if (result) {
+      hide();
+      refreshList();
+    }
   };
 
   const renderAlert = () => {
