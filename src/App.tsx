@@ -53,17 +53,13 @@ const App: React.FC = () => {
             <IonRouterOutlet>
               <Route path="/weight" component={Weight} exact={true} />
               <Route path="/photos" component={Photos} exact={true} />
-              <Route
-                path="/measurements"
-                component={Measurements}
-                exact={true}
-              />
+              <Route path="/measurements" component={Measurements} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/weight" />} />
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
               <IonTabButton tab="weight" href="/weight">
-                <IonLabel>Weight</IonLabel>
+                <IonLabel>Weights</IonLabel>
               </IonTabButton>
 
               <IonTabButton tab="photos" href="/photos">

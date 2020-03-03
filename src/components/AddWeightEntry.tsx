@@ -44,7 +44,7 @@ export const AddWeightEntry: FC<Props> = ({ hide, refreshList }) => {
         onDidDismiss={() => setIsErrorAlertVisible(false)}
         header="Error!"
         message={
-          "You have already added your weight for today, if you want to modify it please remove it from the list below first and then add it again."
+          "You have already added your weight for that date, if you want to modify it please remove it from the list below first and then add it again."
         }
         buttons={["OK"]}
       />
