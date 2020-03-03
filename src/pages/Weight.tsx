@@ -10,12 +10,12 @@ import {
 } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 
-import { AddWeightEntry, FadingWrapper } from "../components";
+import { AddWeightEntry, FadingWrapper, WeightsList } from "../components";
 import { getWeights } from "../data/weight";
 
 export const Weight: React.FC = () => {
   const [isAddWeightEntryVisible, setIsAddWeightEntryVisible] = useState(false);
-  const weights = getWeights();
+  let weights = getWeights();
 
   const addOnClick = () => {
     setIsAddWeightEntryVisible(!isAddWeightEntryVisible);
@@ -25,9 +25,14 @@ export const Weight: React.FC = () => {
     if (!isAddWeightEntryVisible) return null;
     return (
       <FadingWrapper>
-        <AddWeightEntry />
+        <AddWeightEntry refreshList={refreshList} />
       </FadingWrapper>
     );
+  };
+
+  const refreshList = () => {
+    setIsAddWeightEntryVisible(false);
+    weights = getWeights();
   };
 
   const renderWeightEntries = () => {
@@ -51,7 +56,7 @@ export const Weight: React.FC = () => {
           </IonRow>
         </IonGrid>
       );
-    return <IonText>Weight entries should go here</IonText>;
+    return <WeightsList weights={weights} />;
   };
 
   return (
