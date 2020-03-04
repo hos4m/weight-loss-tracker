@@ -52,8 +52,8 @@ const App: React.FC = () => {
           <IonTabs>
             <IonRouterOutlet>
               <Route path="/weight" component={Weight} exact={true} />
-              <Route path="/photos" component={Photos} exact={true} />
               <Route path="/measurements" component={Measurements} exact={true} />
+              <Route path="/photos" component={Photos} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/weight" />} />
             </IonRouterOutlet>
 
@@ -62,12 +62,12 @@ const App: React.FC = () => {
                 <IonLabel>Weights</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="photos" href="/photos">
-                <IonLabel>Photos</IonLabel>
-              </IonTabButton>
-
               <IonTabButton tab="measurements" href="/Measurements">
                 <IonLabel>Measurements</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="photos" href="/photos">
+                <IonLabel>Photos</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
