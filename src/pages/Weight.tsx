@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  IonContent,
-  IonPage,
-  IonButton,
-  IonText,
-  IonIcon,
-  IonGrid,
-  IonRow
-} from "@ionic/react";
+import { IonContent, IonPage, IonButton, IonText, IonIcon, IonGrid, IonRow } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
@@ -19,6 +11,8 @@ export const Weight: React.FC = () => {
   let weights = getWeights();
   const forceUpdate = useForceUpdate();
 
+  // TODO: on unmount, reset the state values
+
   const addOnClick = () => {
     setIsAddWeightEntryVisible(!isAddWeightEntryVisible);
   };
@@ -27,10 +21,7 @@ export const Weight: React.FC = () => {
     if (!isAddWeightEntryVisible) return null;
     return (
       <FadingWrapper>
-        <AddWeightEntry
-          hide={() => setIsAddWeightEntryVisible(false)}
-          refreshList={refreshList}
-        />
+        <AddWeightEntry hide={() => setIsAddWeightEntryVisible(false)} refreshList={refreshList} />
       </FadingWrapper>
     );
   };
@@ -51,12 +42,8 @@ export const Weight: React.FC = () => {
               className="ion-margin-vertical"
               color="medium"
             ></IonIcon>
-            <IonText
-              color="medium"
-              style={{ fontSize: "1.2rem", fontWeight: 500 }}
-            >
-              No weights yet, start by adding a new entry using the Add button
-              above
+            <IonText color="medium" style={{ fontSize: "1.2rem", fontWeight: 500 }}>
+              No weights yet, start by adding a new entry using the Add button above
             </IonText>
           </IonRow>
         </IonGrid>

@@ -7,4 +7,5 @@ export const db = low(adapter);
 
 export const initialize = () => {
   db.defaults({ weights: [] }).write();
+  db.defaults({ measurements: [] }).write();
 };
