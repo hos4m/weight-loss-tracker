@@ -1,10 +1,10 @@
 import { db } from "../initialize";
 import { weightEntryType } from "./types";
-import { isWeightAlreadyAdded } from "./utils";
+import { isEntryAddedBefore } from "../utils";
 
 export const addWeight = (entry: weightEntryType) => {
   const weights = db.get("weights");
-  if (!isWeightAlreadyAdded(weights.value(), entry)) {
+  if (!isEntryAddedBefore(weights.value(), entry)) {
     weights
       // @ts-ignore
       .push(entry)

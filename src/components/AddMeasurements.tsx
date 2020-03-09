@@ -1,5 +1,14 @@
-import React, { FC, SyntheticEvent, useRef } from "react";
-import { IonInput, IonItem, IonGrid, IonRow, IonButton, IonLabel, IonIcon } from "@ionic/react";
+import React, { FC, SyntheticEvent, useRef, useState } from "react";
+import {
+  IonInput,
+  IonItem,
+  IonGrid,
+  IonRow,
+  IonButton,
+  IonLabel,
+  IonIcon,
+  IonAlert
+} from "@ionic/react";
 import { rocketOutline } from "ionicons/icons";
 
 import { addMeasurement } from "../data/measurements";
@@ -10,6 +19,8 @@ interface Props {
 }
 
 export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false);
+
   const parts = {
     chestRef: { name: "chest", ref: useRef<number>(0) },
     waistRef: { name: "waist", ref: useRef<number>(0) },
@@ -31,10 +42,12 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    // TODO: check if measurement is already added then add
-    addMeasurement(getPartsValues());
-    refreshList();
-    hide();
+    const result = addMeasurement(getPartsValues());
+    if (result) {
+      hide();
+      refreshList();
+    }
+    if (!result) setIsErrorAlertVisible(true);
   };
 
   const renderParts = () => {
@@ -53,17 +66,36 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
     });
   };
 
+  const renderAlert = () => {
+    if (!isErrorAlertVisible) return false;
+    return (
+      <IonAlert
+        isOpen
+        onDidDismiss={() => setIsErrorAlertVisible(false)}
+        header="Error!"
+        message={
+          "You have already added your measurements for that date, if you want to modify it please remove it from the list below first and then add it again."
+        }
+        buttons={["OK"]}
+      />
+    );
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      {renderParts()}
-      <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top">
-          <IonButton type="submit">
-            <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
-            <IonIcon icon={rocketOutline} />
-          </IonButton>
-        </IonRow>
-      </IonGrid>
-    </form>
+    <>
+      <form onSubmit={onSubmit}>
+        {renderParts()}
+        <IonGrid>
+          <IonRow className="ion-justify-content-center ion-margin-top">
+            <IonButton type="submit">
+              <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
+              <IonIcon icon={rocketOutline} />
+            </IonButton>
+          </IonRow>
+        </IonGrid>
+      </form>
+
+      {renderAlert()}
+    </>
   );
 };
