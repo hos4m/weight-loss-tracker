@@ -34,7 +34,7 @@ export const MeasurementsList: FC<Props> = ({ measurements }) => {
                 <IonGrid style={{ padding: 0 }}>
                   <IonRow className="ion-wrap">
                     {single.parts.map(part => (
-                      <div key={part.name}>
+                      <div key={part.name} className="ion-text-capitalize">
                         <IonChip>
                           {part.name}: {part.value}
                         </IonChip>
