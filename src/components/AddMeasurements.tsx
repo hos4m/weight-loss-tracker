@@ -1,9 +1,15 @@
 import React, { FC, SyntheticEvent, useRef } from "react";
 import { IonInput, IonItem, IonGrid, IonRow, IonButton, IonLabel, IonIcon } from "@ionic/react";
 import { rocketOutline } from "ionicons/icons";
+
 import { addMeasurement } from "../data/measurements";
 
-export const AddMeasurements: FC = () => {
+interface Props {
+  refreshList: () => void;
+  hide: () => void;
+}
+
+export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
   const parts = {
     chestRef: { name: "chest", ref: useRef<number>(0) },
     waistRef: { name: "waist", ref: useRef<number>(0) },
@@ -27,6 +33,8 @@ export const AddMeasurements: FC = () => {
     e.preventDefault();
     // TODO: check if measurement is already added then add
     addMeasurement(getPartsValues());
+    refreshList();
+    hide();
   };
 
   const renderParts = () => {

@@ -1,5 +1,6 @@
-import { IonContent, IonPage, IonButton, IonGrid, IonRow, IonIcon, IonText } from "@ionic/react";
 import React, { useState } from "react";
+import { IonContent, IonPage, IonButton, IonGrid, IonRow, IonIcon, IonText } from "@ionic/react";
+import useForceUpdate from "use-force-update";
 
 import { AddMeasurements, FadingWrapper, MeasurementsList } from "../components";
 import { getMeasurements } from "../data/measurements/";
@@ -8,12 +9,18 @@ import { sadOutline } from "ionicons/icons";
 export const Measurements: React.FC = () => {
   const [addSectionVisible, setAddSectionVisible] = useState<boolean>(false);
   let measurements = getMeasurements();
+  const forceUpdate = useForceUpdate();
+
+  const refreshList = () => {
+    measurements = getMeasurements();
+    forceUpdate();
+  };
 
   const renderAddSection = () => {
     return (
       addSectionVisible && (
         <FadingWrapper>
-          <AddMeasurements />
+          <AddMeasurements refreshList={refreshList} hide={() => setAddSectionVisible(false)} />
         </FadingWrapper>
       )
     );

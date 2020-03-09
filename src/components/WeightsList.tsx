@@ -14,7 +14,7 @@ import { trashOutline } from "ionicons/icons";
 
 import { deleteWeight } from "../data/weight";
 import { weightEntryType } from "../data/weight/types";
-import { convertISODate } from "../data/weight/utils";
+import { convertISODate } from "../data/utils";
 
 interface Props {
   weights: weightEntryType[];
