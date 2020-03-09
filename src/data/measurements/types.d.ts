@@ -1,4 +1,7 @@
 export interface measurmentEntryType {
-  name: string;
-  value: number;
+  date: string;
+  parts: {
+    name: string;
+    value: number;
+  }[];
 }

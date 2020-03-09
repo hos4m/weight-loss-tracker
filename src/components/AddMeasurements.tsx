@@ -14,10 +14,13 @@ export const AddMeasurements: FC = () => {
   };
 
   const getPartsValues = () => {
-    return Object.entries(parts).map(single => ({
-      name: single[1].name,
-      value: single[1].ref.current
-    }));
+    return {
+      date: new Date().toISOString(),
+      parts: Object.entries(parts).map(single => ({
+        name: single[1].name,
+        value: single[1].ref.current
+      }))
+    };
   };
 
   const onSubmit = (e: SyntheticEvent) => {
