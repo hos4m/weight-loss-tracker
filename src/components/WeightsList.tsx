@@ -53,7 +53,7 @@ export const WeightsList: FC<Props> = ({ weights, refreshList }) => {
   };
 
   const deleteOnConfirm = () => {
-    selectedWeight?.id && deleteWeight(selectedWeight);
+    selectedWeight?.date && deleteWeight(selectedWeight);
     refreshList();
   };
 
@@ -61,7 +61,7 @@ export const WeightsList: FC<Props> = ({ weights, refreshList }) => {
     <>
       {renderConfirmationAlert()}
       {weights.map(weight => (
-        <IonCard key={weight.id}>
+        <IonCard key={weight.date}>
           <IonCardHeader>
             <IonCardSubtitle>{convertISODate(weight.date)} </IonCardSubtitle>
             <IonCardTitle>

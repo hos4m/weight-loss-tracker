@@ -12,7 +12,6 @@ import {
   IonAlert
 } from "@ionic/react";
 import { rocketOutline } from "ionicons/icons";
-import { v4 as uuid } from "uuid";
 
 import { addWeight } from "../data/weight/";
 
@@ -28,7 +27,7 @@ export const AddWeightEntry: FC<Props> = ({ hide, refreshList }) => {
 
   const onAdd = (e: SyntheticEvent) => {
     e.preventDefault();
-    const result = addWeight({ id: uuid(), weightVal, date: dateVal });
+    const result = addWeight({ weightVal, date: dateVal });
     if (!result) setIsErrorAlertVisible(true);
     if (result) {
       hide();
