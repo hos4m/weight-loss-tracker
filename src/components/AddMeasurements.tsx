@@ -7,7 +7,8 @@ import {
   IonButton,
   IonLabel,
   IonIcon,
-  IonAlert
+  IonAlert,
+  IonDatetime
 } from "@ionic/react";
 import { rocketOutline } from "ionicons/icons";
 
@@ -21,6 +22,8 @@ interface Props {
 export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
   const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false);
 
+  let dateRef = useRef(new Date().toISOString());
+
   const parts = {
     chestRef: { name: "chest", ref: useRef<number>(0) },
     waistRef: { name: "waist", ref: useRef<number>(0) },
@@ -32,7 +35,7 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
 
   const getPartsValues = () => {
     return {
-      date: new Date().toISOString(),
+      date: dateRef.current,
       parts: Object.entries(parts).map(single => ({
         name: single[1].name,
         value: single[1].ref.current
@@ -66,6 +69,19 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
     });
   };
 
+  const renderDatePicker = () => {
+    return (
+      <IonItem>
+        <IonDatetime
+          displayFormat="DD MMMM YYYY"
+          placeholder="Select Date"
+          value={dateRef.current}
+          onIonChange={e => (dateRef.current = String(e.detail.value))}
+        ></IonDatetime>
+      </IonItem>
+    );
+  };
+
   const renderAlert = () => {
     if (!isErrorAlertVisible) return false;
     return (
@@ -85,6 +101,7 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
     <>
       <form onSubmit={onSubmit}>
         {renderParts()}
+        {renderDatePicker()}
         <IonGrid>
           <IonRow className="ion-justify-content-center ion-margin-top">
             <IonButton type="submit">

@@ -1,5 +1,6 @@
 import { db } from "../initialize";
+import { sortListByDate } from "../utils";
 
 export const getMeasurements = () => {
-  return db.get("measurements").value();
+  return sortListByDate(db.get("measurements").value());
 };
