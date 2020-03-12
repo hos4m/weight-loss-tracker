@@ -6,4 +6,10 @@ PWA to track your weight loss journey
 - Upload photos of yourself to see the difference in your body
 - Add your body meassures (arms, waist, thighs, etc...)
 
-![Weights Page](/public/assets/images/screenshots/weights-page.jpeg)
+## Weights Screen
+
+![Weights Screen](/public/assets/images/screenshots/weights-page.jpeg)
+
+## Measurements Screen
+
+![Measurements Screen](/public/assets/images/screenshots/measurements-page.jpeg)
