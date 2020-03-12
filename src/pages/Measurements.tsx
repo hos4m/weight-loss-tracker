@@ -44,7 +44,7 @@ export const Measurements: React.FC = () => {
         </IonGrid>
       );
     } else {
-      return <MeasurementsList measurements={measurements} />;
+      return <MeasurementsList measurements={measurements} refreshList={refreshList} />;
     }
   };
 
