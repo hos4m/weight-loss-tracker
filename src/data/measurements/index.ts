@@ -1,3 +1,4 @@
 export { addMeasurement } from "./addMeasurement";
 export { getMeasurements } from "./getMeasurements";
-export { removeAllMeasurements } from "./removeAllMeasurements";
+export { deleteAllMeasurements } from "./deleteAllMeasurements";
+export { deleteMeasurement } from "./deleteMeasurement";

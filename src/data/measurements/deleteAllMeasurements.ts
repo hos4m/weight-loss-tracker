@@ -1,6 +1,6 @@
 import { db } from "../initialize";
 
-export const removeAllMeasurements = () =>
+export const deleteAllMeasurements = () =>
   db
     .get("measurements")
     // @ts-ignore
