@@ -1,5 +1,6 @@
 import React, { FC, useRef } from "react";
 import { IonButton } from "@ionic/react";
+import { addPhoto } from "../data/photos";
 
 export const AddPhotos: FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -14,9 +15,10 @@ export const AddPhotos: FC = () => {
         const reader = new FileReader();
         reader.readAsDataURL(files[i]);
         reader.onloadend = result => {
-          console.log("----------------------------");
-          console.log(result);
-          console.log("----------------------------");
+          addPhoto({
+            date: new Date().toISOString(),
+            base64: result?.target?.result as string
+          });
         };
       }
     }
