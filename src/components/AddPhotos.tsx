@@ -1,8 +1,13 @@
 import React, { FC, useRef } from "react";
 import { IonButton } from "@ionic/react";
+
 import { addPhoto } from "../data/photos";
 
-export const AddPhotos: FC = () => {
+interface Props {
+  refreshList: () => void;
+}
+
+export const AddPhotos: FC<Props> = ({ refreshList }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const addOnClick = () => {
@@ -19,6 +24,7 @@ export const AddPhotos: FC = () => {
             date: new Date().toISOString(),
             base64: result?.target?.result as string
           });
+          refreshList();
         };
       }
     }
