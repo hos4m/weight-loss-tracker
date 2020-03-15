@@ -58,6 +58,8 @@ export const MeasurementsList: FC<Props> = ({ measurements, refreshList }) => {
 
   const deleteOnConfirm = () => {
     selectedMeasurement?.date && deleteMeasurement(selectedMeasurement);
+    setSelectedMeasurement(undefined);
+    setConfirmationAlertVisible(false);
     refreshList();
   };
 

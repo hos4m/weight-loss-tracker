@@ -54,6 +54,8 @@ export const WeightsList: FC<Props> = ({ weights, refreshList }) => {
 
   const deleteOnConfirm = () => {
     selectedWeight?.date && deleteWeight(selectedWeight);
+    setSelectedWeight(undefined);
+    setConfirmationAlertVisible(false);
     refreshList();
   };
 
