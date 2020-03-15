@@ -6,3 +6,4 @@ export { MeasurementsList } from "./MeasurementsList";
 export { AddPhotos } from "./AddPhotos";
 export { PhotosList } from "./PhotosList";
 export { LineSeparator } from "./LineSeparator";
+export { PhotoBlock } from "./PhotoBlock";

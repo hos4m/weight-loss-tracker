@@ -1,25 +1,55 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { IonChip, IonIcon, IonLabel, IonRow, IonGrid, IonText } from "@ionic/react";
 import { calendarOutline } from "ionicons/icons";
 
-import { PhotoEntriesGroupedByDateType } from "../data/photos/types";
+import { PhotoEntriesGroupedByDateType, PhotoEntry } from "../data/photos/types";
 import { LineSeparator } from "./LineSeparator";
+import { PhotoBlock } from "./PhotoBlock";
 
 interface Props {
   photos: PhotoEntriesGroupedByDateType;
 }
 
 export const PhotosList: FC<Props> = ({ photos }) => {
-  const renderLabel = () => (
-    <IonText color="medium">
-      <p className="ion-text-center" color="priamry">
-        Click on a photo to enlarge
-      </p>
-    </IonText>
-  );
+  const [showPhotoModal, setShowPhotoModal] = useState<boolean>(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoEntry | null>(null);
 
-  const renderPhotos = () =>
-    Object.keys(photos).map(date => {
+  const renderLabel = () => {
+    if (showPhotoModal) {
+      return (
+        <IonText color="medium">
+          <p className="ion-text-center" color="priamry">
+            Click again to go back
+          </p>
+        </IonText>
+      );
+    }
+
+    return (
+      <IonText color="medium">
+        <p className="ion-text-center" color="priamry">
+          Click on a photo to enlarge
+        </p>
+      </IonText>
+    );
+  };
+
+  const photoOnClick = (photo: PhotoEntry) => {
+    setSelectedPhoto(photo);
+    setShowPhotoModal(true);
+  };
+
+  const hidePhotoModal = () => {
+    setSelectedPhoto(null);
+    setShowPhotoModal(false);
+  };
+
+  const renderPhotos = () => {
+    if (showPhotoModal && selectedPhoto) {
+      return <PhotoBlock photo={selectedPhoto} hide={hidePhotoModal} />;
+    }
+
+    return Object.keys(photos).map(date => {
       return (
         <Fragment key={date}>
           <IonRow>
@@ -37,6 +67,7 @@ export const PhotosList: FC<Props> = ({ photos }) => {
                     src={photo.base64}
                     alt={`Taken at ${photo.date}`}
                     style={{ width: "calc(92%/2)", borderRadius: "15px", margin: "4% 4% 0 0" }}
+                    onClick={() => photoOnClick(photo)}
                   />
                 </Fragment>
               ))}
@@ -47,6 +78,7 @@ export const PhotosList: FC<Props> = ({ photos }) => {
         </Fragment>
       );
     });
+  };
 
   return (
     <>
