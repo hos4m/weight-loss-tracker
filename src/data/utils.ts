@@ -1,3 +1,5 @@
+import { PhotoEntry, PhotoEntriesGroupedByDateType } from "./photos/types";
+
 export const convertISODate = (ISODate: string) => {
   const date = new Date(ISODate);
   return `
@@ -17,4 +19,19 @@ export const sortListByDate = (list: any) => {
     if (new Date(a.date) < new Date(b.date)) return 1;
     return 0;
   });
+};
+
+export const groupByDate = (list: any) => {
+  const result: PhotoEntriesGroupedByDateType = {};
+
+  list.forEach((single: PhotoEntry) => {
+    const date = convertISODate(single.date);
+    if (result[date]) {
+      result[date] = [single, ...result[date]];
+    } else {
+      result[date] = [single];
+    }
+  });
+
+  return result;
 };
