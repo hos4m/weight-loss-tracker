@@ -43,7 +43,7 @@ export const AddPhotos: FC<Props> = ({ refreshList }) => {
         ref={fileInputRef}
         className="ion-hide"
         onChange={e => handleChange(e.target.files)}
-      ></input>
+      />
     </>
   );
 };

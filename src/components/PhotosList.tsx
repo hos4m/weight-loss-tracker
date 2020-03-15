@@ -14,25 +14,13 @@ export const PhotosList: FC<Props> = ({ photos }) => {
   const [showPhotoModal, setShowPhotoModal] = useState<boolean>(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoEntry | null>(null);
 
-  const renderLabel = () => {
-    if (showPhotoModal) {
-      return (
-        <IonText color="medium">
-          <p className="ion-text-center" color="priamry">
-            Click again to go back
-          </p>
-        </IonText>
-      );
-    }
-
-    return (
-      <IonText color="medium">
-        <p className="ion-text-center" color="priamry">
-          Click on a photo to enlarge
-        </p>
-      </IonText>
-    );
-  };
+  const renderLabel = () => (
+    <IonText color="medium">
+      <p className="ion-text-center" color="priamry">
+        {showPhotoModal ? "Click again to go back" : "Click on a photo to enlarge"}
+      </p>
+    </IonText>
+  );
 
   const photoOnClick = (photo: PhotoEntry) => {
     setSelectedPhoto(photo);
