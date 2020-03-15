@@ -1,18 +1,22 @@
 import React, { FC, Fragment, useState } from "react";
-import { IonChip, IonIcon, IonLabel, IonRow, IonGrid, IonText } from "@ionic/react";
-import { calendarOutline } from "ionicons/icons";
+import { IonChip, IonIcon, IonLabel, IonRow, IonGrid, IonText, IonAlert } from "@ionic/react";
+import { calendarOutline, trashOutline } from "ionicons/icons";
 
 import { PhotoEntriesGroupedByDateType, PhotoEntry } from "../data/photos/types";
 import { LineSeparator } from "./LineSeparator";
 import { PhotoBlock } from "./PhotoBlock";
+import { deletePhoto } from "../data/photos";
 
 interface Props {
   photos: PhotoEntriesGroupedByDateType;
+  refreshList: () => void;
 }
 
-export const PhotosList: FC<Props> = ({ photos }) => {
+export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
   const [showPhotoModal, setShowPhotoModal] = useState<boolean>(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoEntry | null>(null);
+  const [confirmationAlertVisible, setConfirmationAlertVisible] = useState(false);
+  const [photoToDelete, setPhotoToDelete] = useState<PhotoEntry | null>(null);
 
   const renderLabel = () => (
     <IonText color="medium">
@@ -30,6 +34,40 @@ export const PhotosList: FC<Props> = ({ photos }) => {
   const hidePhotoModal = () => {
     setSelectedPhoto(null);
     setShowPhotoModal(false);
+  };
+
+  const deleteOnClick = (photo: PhotoEntry) => {
+    setPhotoToDelete(photo);
+    setConfirmationAlertVisible(true);
+  };
+
+  const renderConfirmationAlert = () => {
+    return (
+      <IonAlert
+        isOpen={confirmationAlertVisible}
+        header="Are you sure?"
+        message="This will be deleted permanently"
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => setConfirmationAlertVisible(false)
+          },
+          {
+            text: "Yes",
+            handler: () => deleteOnConfirm()
+          }
+        ]}
+      />
+    );
+  };
+
+  const deleteOnConfirm = () => {
+    photoToDelete?.date && deletePhoto(photoToDelete);
+    setPhotoToDelete(null);
+    setConfirmationAlertVisible(false);
+    refreshList();
   };
 
   const renderPhotos = () => {
@@ -50,14 +88,31 @@ export const PhotosList: FC<Props> = ({ photos }) => {
           <IonGrid>
             <IonRow>
               {photos[date].map(photo => (
-                <Fragment key={photo.date}>
+                <div
+                  key={photo.date}
+                  style={{ width: "calc(92%/2)", margin: "4% 4% 0 0", position: "relative" }}
+                >
                   <img
                     src={photo.base64}
                     alt={`Taken at ${photo.date}`}
-                    style={{ width: "calc(92%/2)", borderRadius: "15px", margin: "4% 4% 0 0" }}
+                    style={{ borderRadius: "15px" }}
                     onClick={() => photoOnClick(photo)}
                   />
-                </Fragment>
+
+                  <IonIcon
+                    icon={trashOutline}
+                    color="light"
+                    onClick={() => deleteOnClick(photo)}
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      backgroundColor: "red",
+                      padding: "5px",
+                      borderRadius: "100px"
+                    }}
+                  />
+                </div>
               ))}
             </IonRow>
           </IonGrid>
@@ -70,6 +125,7 @@ export const PhotosList: FC<Props> = ({ photos }) => {
 
   return (
     <>
+      {renderConfirmationAlert()}
       {renderLabel()}
       {renderPhotos()}
     </>

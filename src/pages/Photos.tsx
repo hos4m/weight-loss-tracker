@@ -35,7 +35,7 @@ export const Photos: FC = () => {
       );
     }
 
-    return <PhotosList photos={groupByDate(photos)} />;
+    return <PhotosList photos={groupByDate(photos)} refreshList={refreshList} />;
   };
 
   return (
