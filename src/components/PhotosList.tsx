@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from "react";
-import { IonChip, IonIcon, IonLabel, IonRow, IonGrid } from "@ionic/react";
+import { IonChip, IonIcon, IonLabel, IonRow, IonGrid, IonText } from "@ionic/react";
 import { calendarOutline } from "ionicons/icons";
 
 import { PhotoEntriesGroupedByDateType } from "../data/photos/types";
@@ -10,8 +10,16 @@ interface Props {
 }
 
 export const PhotosList: FC<Props> = ({ photos }) => {
-  const renderPhotos = () => {
-    return Object.keys(photos).map(date => {
+  const renderLabel = () => (
+    <IonText color="medium">
+      <p className="ion-text-center" color="priamry">
+        Click on a photo to enlarge
+      </p>
+    </IonText>
+  );
+
+  const renderPhotos = () =>
+    Object.keys(photos).map(date => {
       return (
         <Fragment key={date}>
           <IonRow>
@@ -28,7 +36,7 @@ export const PhotosList: FC<Props> = ({ photos }) => {
                   <img
                     src={photo.base64}
                     alt={`Taken at ${photo.date}`}
-                    style={{ width: "calc(94%/3)", borderRadius: "15px", margin: "2% 2% 0 0" }}
+                    style={{ width: "calc(92%/2)", borderRadius: "15px", margin: "4% 4% 0 0" }}
                   />
                 </Fragment>
               ))}
@@ -39,7 +47,11 @@ export const PhotosList: FC<Props> = ({ photos }) => {
         </Fragment>
       );
     });
-  };
 
-  return <>{renderPhotos()}</>;
+  return (
+    <>
+      {renderLabel()}
+      {renderPhotos()}
+    </>
+  );
 };
