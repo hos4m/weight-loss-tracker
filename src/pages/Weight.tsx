@@ -11,10 +11,17 @@ export const Weight: React.FC = () => {
   let weights = getWeights();
   const forceUpdate = useForceUpdate();
 
-  // TODO: on unmount, reset the state values
+  const refreshList = () => {
+    weights = getWeights();
+    forceUpdate();
+  };
 
   const addOnClick = () => {
     setIsAddWeightEntryVisible(!isAddWeightEntryVisible);
+  };
+
+  const deleteAllOnClick = () => {
+    alert("test");
   };
 
   const renderAddWeightEntry = () => {
@@ -26,13 +33,8 @@ export const Weight: React.FC = () => {
     );
   };
 
-  const refreshList = () => {
-    weights = getWeights();
-    forceUpdate();
-  };
-
   const renderWeightEntries = () => {
-    if (!weights || weights.length === 0)
+    if (!weights || weights.length === 0) {
       return (
         <IonGrid className="ion-margin-vertical ion-text-center ion-text-large">
           <IonRow className="ion-justify-content-center">
@@ -48,16 +50,26 @@ export const Weight: React.FC = () => {
           </IonRow>
         </IonGrid>
       );
+    }
     return <WeightsList weights={weights} refreshList={refreshList} />;
   };
 
   return (
     <IonPage>
       <IonContent class="ion-padding">
-        <IonButton expand="block" fill="outline" onClick={addOnClick}>
-          Add
-        </IonButton>
+        <IonGrid>
+          <IonRow className="ion-justify-content-between">
+            <IonButton fill="outline" onClick={addOnClick}>
+              Add
+            </IonButton>
+            <IonButton fill="outline" color="danger" onClick={deleteAllOnClick}>
+              Delete All
+            </IonButton>
+          </IonRow>
+        </IonGrid>
+
         {renderAddWeightEntry()}
+
         {renderWeightEntries()}
       </IonContent>
     </IonPage>
