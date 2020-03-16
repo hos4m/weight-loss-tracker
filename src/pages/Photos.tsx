@@ -4,10 +4,15 @@ import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
 import { AddPhotos, PhotosList } from "../components";
-import { getPhotos } from "../data/photos";
+import { getPhotos, deleteAllPhotos } from "../data/photos";
 import { groupByDate } from "../data/utils";
+import { useDeleteAll } from "../hooks";
 
 export const Photos: FC = () => {
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
+    onConfirm: () => deleteAllPhotos()
+  });
+
   let photos = getPhotos();
   const forceUpdate = useForceUpdate();
 
@@ -41,7 +46,15 @@ export const Photos: FC = () => {
   return (
     <IonPage>
       <IonContent class="ion-padding">
-        <AddPhotos refreshList={refreshList} />
+        <DeleteAllConfirmationAlert />
+
+        <IonGrid>
+          <IonRow className="ion-justify-content-between">
+            <AddPhotos refreshList={refreshList} />
+            <DeleteAllButton />
+          </IonRow>
+        </IonGrid>
+
         {renderPhotos()}
       </IonContent>
     </IonPage>
