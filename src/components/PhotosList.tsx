@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useState } from "react";
-import { IonChip, IonIcon, IonLabel, IonRow, IonGrid, IonText, IonAlert } from "@ionic/react";
+import { IonChip, IonIcon, IonLabel, IonRow, IonText, IonAlert, IonButton } from "@ionic/react";
 import { calendarOutline, trashOutline } from "ionicons/icons";
 
 import { PhotoEntriesGroupedByDateType, PhotoEntry } from "../data/photos/types";
@@ -70,6 +70,10 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
     refreshList();
   };
 
+  const deleteDayPhotos = () => {
+    alert("deleteDayPhotos");
+  };
+
   const renderPhotos = () => {
     if (showPhotoModal && selectedPhoto) {
       return <PhotoBlock photo={selectedPhoto} hide={hidePhotoModal} />;
@@ -78,44 +82,46 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
     return Object.keys(photos).map(date => {
       return (
         <Fragment key={date}>
-          <IonRow>
-            <IonChip color="primary">
+          <IonRow className="ion-justify-content-between">
+            <IonChip color="primary" className="ion-no-margin">
               <IonIcon icon={calendarOutline} />
               <IonLabel>{date}</IonLabel>
             </IonChip>
+
+            <IonButton size="small" color="danger" onClick={() => deleteDayPhotos()}>
+              Delete
+            </IonButton>
           </IonRow>
 
-          <IonGrid>
-            <IonRow>
-              {photos[date].map(photo => (
-                <div
-                  key={photo.date}
-                  style={{ width: "calc(92%/2)", margin: "4% 4% 0 0", position: "relative" }}
-                >
-                  <img
-                    src={photo.base64}
-                    alt={`Taken at ${photo.date}`}
-                    style={{ borderRadius: "15px" }}
-                    onClick={() => photoOnClick(photo)}
-                  />
+          <IonRow>
+            {photos[date].map(photo => (
+              <div
+                key={photo.date}
+                style={{ width: "calc(92%/2)", margin: "4% 4% 0 0", position: "relative" }}
+              >
+                <img
+                  src={photo.base64}
+                  alt={`Taken at ${photo.date}`}
+                  style={{ borderRadius: "15px" }}
+                  onClick={() => photoOnClick(photo)}
+                />
 
-                  <IonIcon
-                    icon={trashOutline}
-                    color="light"
-                    onClick={() => deleteOnClick(photo)}
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      backgroundColor: "red",
-                      padding: "5px",
-                      borderRadius: "100px"
-                    }}
-                  />
-                </div>
-              ))}
-            </IonRow>
-          </IonGrid>
+                <IonIcon
+                  icon={trashOutline}
+                  color="light"
+                  onClick={() => deleteOnClick(photo)}
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    backgroundColor: "red",
+                    padding: "5px",
+                    borderRadius: "100px"
+                  }}
+                />
+              </div>
+            ))}
+          </IonRow>
 
           <LineSeparator />
         </Fragment>

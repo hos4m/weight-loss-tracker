@@ -46,12 +46,10 @@ export const Photos: FC = () => {
       <IonContent class="ion-padding">
         <DeleteAllConfirmationAlert />
 
-        <IonGrid>
-          <IonRow className="ion-justify-content-between">
-            <AddPhotos refreshList={refreshList} />
-            {photos.length > 0 && <DeleteAllButton />}
-          </IonRow>
-        </IonGrid>
+        <IonRow className="ion-justify-content-between">
+          <AddPhotos refreshList={refreshList} />
+          {photos.length > 0 && <DeleteAllButton />}
+        </IonRow>
 
         {renderPhotos()}
       </IonContent>
