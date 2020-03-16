@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { IonContent, IonPage, IonButton, IonGrid, IonRow, IonIcon, IonText } from "@ionic/react";
+import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
 import { AddMeasurements, FadingWrapper, MeasurementsList } from "../components";
-import { getMeasurements } from "../data/measurements/";
-import { sadOutline } from "ionicons/icons";
+import { getMeasurements, deleteAllMeasurements } from "../data/measurements/";
+import { useDeleteAll } from "../hooks";
 
 export const Measurements: React.FC = () => {
   const [addSectionVisible, setAddSectionVisible] = useState<boolean>(false);
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
+    onConfirm: () => deleteAllMeasurements()
+  });
+
   let measurements = getMeasurements();
   const forceUpdate = useForceUpdate();
 
@@ -51,14 +56,23 @@ export const Measurements: React.FC = () => {
   return (
     <IonPage>
       <IonContent class="ion-padding">
-        <IonButton
-          expand="block"
-          fill="outline"
-          onClick={() => setAddSectionVisible(!addSectionVisible)}
-        >
-          Add
-        </IonButton>
+        <DeleteAllConfirmationAlert />
+
+        <IonGrid>
+          <IonRow className="ion-justify-content-between">
+            <IonButton
+              expand="block"
+              fill="outline"
+              onClick={() => setAddSectionVisible(!addSectionVisible)}
+            >
+              Add
+            </IonButton>
+            {measurements.length > 0 && <DeleteAllButton />}
+          </IonRow>
+        </IonGrid>
+
         {renderAddSection()}
+
         {renderList()}
       </IonContent>
     </IonPage>
