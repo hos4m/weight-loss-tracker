@@ -1,11 +1,12 @@
 import React, { FC, Fragment, useState } from "react";
-import { IonChip, IonIcon, IonLabel, IonRow, IonText, IonAlert, IonButton } from "@ionic/react";
+import { IonChip, IonIcon, IonLabel, IonRow, IonText, IonAlert } from "@ionic/react";
 import { calendarOutline, trashOutline } from "ionicons/icons";
 
 import { PhotoEntriesGroupedByDateType, PhotoEntry } from "../data/photos/types";
 import { LineSeparator } from "./LineSeparator";
 import { PhotoBlock } from "./PhotoBlock";
 import { deletePhoto, deleteDayPhotos } from "../data/photos";
+import { useDeletePhotosByDay } from "../hooks";
 
 interface Props {
   photos: PhotoEntriesGroupedByDateType;
@@ -17,6 +18,10 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoEntry | null>(null);
   const [confirmationAlertVisible, setConfirmationAlertVisible] = useState(false);
   const [photoToDelete, setPhotoToDelete] = useState<PhotoEntry | null>(null);
+  const [dayToDelete, setDayToDelete] = useState<string | null>(null);
+  const { DeleteDayConfirmationAlert, DeleteThisDayButton } = useDeletePhotosByDay(
+    deleteDayOnConfirm
+  );
 
   const renderLabel = () => (
     <IonText color="medium">
@@ -70,10 +75,10 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
     refreshList();
   };
 
-  const deleteDayPhotosOnClick = (date: string) => {
-    deleteDayPhotos(date);
+  function deleteDayOnConfirm() {
+    if (dayToDelete) deleteDayPhotos(dayToDelete);
     refreshList();
-  };
+  }
 
   const renderPhotos = () => {
     if (showPhotoModal && selectedPhoto) {
@@ -89,9 +94,7 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
               <IonLabel>{date}</IonLabel>
             </IonChip>
 
-            <IonButton size="small" color="danger" onClick={() => deleteDayPhotosOnClick(date)}>
-              Delete this day
-            </IonButton>
+            <DeleteThisDayButton onClick={() => setDayToDelete(date)} />
           </IonRow>
 
           <IonRow>
@@ -133,6 +136,7 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
   return (
     <>
       {renderConfirmationAlert()}
+      <DeleteDayConfirmationAlert />
       {renderLabel()}
       {renderPhotos()}
     </>
