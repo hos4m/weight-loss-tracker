@@ -1,0 +1,1 @@
+export { useDeleteAll } from "./useDeleteAll";

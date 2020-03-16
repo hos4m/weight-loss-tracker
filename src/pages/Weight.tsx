@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import {
-  IonContent,
-  IonPage,
-  IonButton,
-  IonText,
-  IonIcon,
-  IonGrid,
-  IonRow,
-  IonAlert
-} from "@ionic/react";
+import { IonContent, IonPage, IonButton, IonText, IonIcon, IonGrid, IonRow } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
 import { AddWeightEntry, FadingWrapper, WeightsList } from "../components";
 import { getWeights, deleteAllWeights } from "../data/weight";
+import { useDeleteAll } from "../hooks";
 
 export const Weight: React.FC = () => {
   const [isAddWeightEntryVisible, setIsAddWeightEntryVisible] = useState(false);
-  const [deleteAllConfirmationVisible, setDeleteAllConfirmationVisible] = useState(false);
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
+    onConfirm: () => deleteAllWeights()
+  });
 
   let weights = getWeights();
   const forceUpdate = useForceUpdate();
@@ -38,33 +32,6 @@ export const Weight: React.FC = () => {
         <AddWeightEntry hide={() => setIsAddWeightEntryVisible(false)} refreshList={refreshList} />
       </FadingWrapper>
     );
-  };
-
-  const renderDeleteAllConfirmation = () => {
-    return (
-      <IonAlert
-        isOpen={deleteAllConfirmationVisible}
-        header="Are you sure?"
-        message="This will be deleted permanently"
-        buttons={[
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-            handler: () => setDeleteAllConfirmationVisible(false)
-          },
-          {
-            text: "Yes",
-            handler: () => deleteAllOnConfirm()
-          }
-        ]}
-      />
-    );
-  };
-
-  const deleteAllOnConfirm = () => {
-    deleteAllWeights();
-    setDeleteAllConfirmationVisible(false);
   };
 
   const renderWeightEntries = () => {
@@ -91,7 +58,7 @@ export const Weight: React.FC = () => {
   return (
     <IonPage>
       <IonContent class="ion-padding">
-        {renderDeleteAllConfirmation()}
+        <DeleteAllConfirmationAlert />
 
         <IonGrid>
           <IonRow className="ion-justify-content-between">
@@ -99,15 +66,7 @@ export const Weight: React.FC = () => {
               Add
             </IonButton>
 
-            {weights.length > 0 && (
-              <IonButton
-                fill="outline"
-                color="danger"
-                onClick={() => setDeleteAllConfirmationVisible(true)}
-              >
-                Delete All
-              </IonButton>
-            )}
+            {weights.length > 0 && <DeleteAllButton />}
           </IonRow>
         </IonGrid>
 
