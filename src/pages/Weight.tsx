@@ -98,13 +98,16 @@ export const Weight: React.FC = () => {
             <IonButton fill="outline" onClick={addOnClick}>
               Add
             </IonButton>
-            <IonButton
-              fill="outline"
-              color="danger"
-              onClick={() => setDeleteAllConfirmationVisible(true)}
-            >
-              Delete All
-            </IonButton>
+
+            {weights.length > 0 && (
+              <IonButton
+                fill="outline"
+                color="danger"
+                onClick={() => setDeleteAllConfirmationVisible(true)}
+              >
+                Delete All
+              </IonButton>
+            )}
           </IonRow>
         </IonGrid>
 
