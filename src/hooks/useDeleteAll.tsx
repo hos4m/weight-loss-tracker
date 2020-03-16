@@ -1,11 +1,7 @@
 import React, { FC, useState } from "react";
 import { IonButton, IonAlert } from "@ionic/react";
 
-interface Params {
-  onConfirm: () => void;
-}
-
-export const useDeleteAll = ({ onConfirm }: Params) => {
+export const useDeleteAll = (onConfirm: Function) => {
   const [confirmationVisible, setConfirmationVisible] = useState<boolean>(false);
 
   const DeleteAllButton: FC = () => {

@@ -9,9 +9,7 @@ import { groupByDate } from "../data/utils";
 import { useDeleteAll } from "../hooks";
 
 export const Photos: FC = () => {
-  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
-    onConfirm: () => deleteAllPhotos()
-  });
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll(deleteAllPhotos);
 
   let photos = getPhotos();
   const forceUpdate = useForceUpdate();
@@ -51,7 +49,7 @@ export const Photos: FC = () => {
         <IonGrid>
           <IonRow className="ion-justify-content-between">
             <AddPhotos refreshList={refreshList} />
-            <DeleteAllButton />
+            {photos.length > 0 && <DeleteAllButton />}
           </IonRow>
         </IonGrid>
 

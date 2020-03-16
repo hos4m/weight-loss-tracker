@@ -9,9 +9,7 @@ import { useDeleteAll } from "../hooks";
 
 export const Measurements: React.FC = () => {
   const [addSectionVisible, setAddSectionVisible] = useState<boolean>(false);
-  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
-    onConfirm: () => deleteAllMeasurements()
-  });
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll(deleteAllMeasurements);
 
   let measurements = getMeasurements();
   const forceUpdate = useForceUpdate();

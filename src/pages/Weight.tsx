@@ -9,9 +9,7 @@ import { useDeleteAll } from "../hooks";
 
 export const Weight: React.FC = () => {
   const [isAddWeightEntryVisible, setIsAddWeightEntryVisible] = useState(false);
-  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll({
-    onConfirm: () => deleteAllWeights()
-  });
+  const { DeleteAllButton, DeleteAllConfirmationAlert } = useDeleteAll(deleteAllWeights);
 
   let weights = getWeights();
   const forceUpdate = useForceUpdate();
