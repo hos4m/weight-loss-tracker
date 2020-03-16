@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { IonContent, IonPage, IonButton, IonText, IonIcon, IonGrid, IonRow } from "@ionic/react";
+import {
+  IonContent,
+  IonPage,
+  IonButton,
+  IonText,
+  IonIcon,
+  IonGrid,
+  IonRow,
+  IonAlert
+} from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
 import { AddWeightEntry, FadingWrapper, WeightsList } from "../components";
-import { getWeights } from "../data/weight";
+import { getWeights, deleteAllWeights } from "../data/weight";
 
 export const Weight: React.FC = () => {
   const [isAddWeightEntryVisible, setIsAddWeightEntryVisible] = useState(false);
+  const [deleteAllConfirmationVisible, setDeleteAllConfirmationVisible] = useState(false);
+
   let weights = getWeights();
   const forceUpdate = useForceUpdate();
 
@@ -20,10 +31,6 @@ export const Weight: React.FC = () => {
     setIsAddWeightEntryVisible(!isAddWeightEntryVisible);
   };
 
-  const deleteAllOnClick = () => {
-    alert("test");
-  };
-
   const renderAddWeightEntry = () => {
     if (!isAddWeightEntryVisible) return null;
     return (
@@ -31,6 +38,33 @@ export const Weight: React.FC = () => {
         <AddWeightEntry hide={() => setIsAddWeightEntryVisible(false)} refreshList={refreshList} />
       </FadingWrapper>
     );
+  };
+
+  const renderDeleteAllConfirmation = () => {
+    return (
+      <IonAlert
+        isOpen={deleteAllConfirmationVisible}
+        header="Are you sure?"
+        message="This will be deleted permanently"
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => setDeleteAllConfirmationVisible(false)
+          },
+          {
+            text: "Yes",
+            handler: () => deleteAllOnConfirm()
+          }
+        ]}
+      />
+    );
+  };
+
+  const deleteAllOnConfirm = () => {
+    deleteAllWeights();
+    setDeleteAllConfirmationVisible(false);
   };
 
   const renderWeightEntries = () => {
@@ -57,12 +91,18 @@ export const Weight: React.FC = () => {
   return (
     <IonPage>
       <IonContent class="ion-padding">
+        {renderDeleteAllConfirmation()}
+
         <IonGrid>
           <IonRow className="ion-justify-content-between">
             <IonButton fill="outline" onClick={addOnClick}>
               Add
             </IonButton>
-            <IonButton fill="outline" color="danger" onClick={deleteAllOnClick}>
+            <IonButton
+              fill="outline"
+              color="danger"
+              onClick={() => setDeleteAllConfirmationVisible(true)}
+            >
               Delete All
             </IonButton>
           </IonRow>
