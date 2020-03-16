@@ -5,7 +5,7 @@ import { calendarOutline, trashOutline } from "ionicons/icons";
 import { PhotoEntriesGroupedByDateType, PhotoEntry } from "../data/photos/types";
 import { LineSeparator } from "./LineSeparator";
 import { PhotoBlock } from "./PhotoBlock";
-import { deletePhoto } from "../data/photos";
+import { deletePhoto, deleteDayPhotos } from "../data/photos";
 
 interface Props {
   photos: PhotoEntriesGroupedByDateType;
@@ -70,8 +70,9 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
     refreshList();
   };
 
-  const deleteDayPhotos = () => {
-    alert("deleteDayPhotos");
+  const deleteDayPhotosOnClick = (date: string) => {
+    deleteDayPhotos(date);
+    refreshList();
   };
 
   const renderPhotos = () => {
@@ -88,8 +89,8 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
               <IonLabel>{date}</IonLabel>
             </IonChip>
 
-            <IonButton size="small" color="danger" onClick={() => deleteDayPhotos()}>
-              Delete
+            <IonButton size="small" color="danger" onClick={() => deleteDayPhotosOnClick(date)}>
+              Delete this day
             </IonButton>
           </IonRow>
 
