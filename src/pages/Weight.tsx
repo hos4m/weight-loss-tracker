@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IonContent, IonPage, IonButton, IonText, IonIcon, IonGrid, IonRow } from "@ionic/react";
+import { IonContent, IonPage, IonButton, IonText, IonIcon, IonRow } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
@@ -35,19 +35,17 @@ export const Weight: React.FC = () => {
   const renderWeightEntries = () => {
     if (!weights || weights.length === 0) {
       return (
-        <IonGrid className="ion-margin-vertical ion-text-center ion-text-large">
-          <IonRow className="ion-justify-content-center">
-            <IonIcon
-              icon={sadOutline}
-              size="large"
-              className="ion-margin-vertical"
-              color="medium"
-            ></IonIcon>
-            <IonText color="medium" style={{ fontSize: "1.2rem", fontWeight: 500 }}>
-              No weights yet, start by adding a new entry using the Add button above
-            </IonText>
-          </IonRow>
-        </IonGrid>
+        <IonRow className="ion-justify-content-center ion-text-center ion-text-large">
+          <IonIcon
+            icon={sadOutline}
+            size="large"
+            className="ion-margin-vertical"
+            color="medium"
+          ></IonIcon>
+          <IonText color="medium" style={{ fontSize: "1.2rem", fontWeight: 500 }}>
+            No weights yet, start by adding a new entry using the Add button above
+          </IonText>
+        </IonRow>
       );
     }
     return <WeightsList weights={weights} refreshList={refreshList} />;
@@ -58,15 +56,13 @@ export const Weight: React.FC = () => {
       <IonContent class="ion-padding">
         <DeleteAllConfirmationAlert />
 
-        <IonGrid>
-          <IonRow className="ion-justify-content-between">
-            <IonButton fill="outline" onClick={addOnClick}>
-              Add
-            </IonButton>
+        <IonRow className="ion-justify-content-between">
+          <IonButton fill="outline" onClick={addOnClick}>
+            Add
+          </IonButton>
 
-            {weights.length > 0 && <DeleteAllButton />}
-          </IonRow>
-        </IonGrid>
+          {weights.length > 0 && <DeleteAllButton />}
+        </IonRow>
 
         {renderAddWeightEntry()}
 

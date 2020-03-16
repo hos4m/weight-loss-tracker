@@ -7,7 +7,6 @@ import {
   IonDatetime,
   IonButton,
   IonIcon,
-  IonGrid,
   IonRow,
   IonAlert
 } from "@ionic/react";
@@ -78,14 +77,12 @@ export const AddWeightEntry: FC<Props> = ({ hide, refreshList }) => {
         ></IonDatetime>
       </IonItem>
 
-      <IonGrid>
-        <IonRow className="ion-justify-content-center ion-margin-top">
-          <IonButton type="submit">
-            <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
-            <IonIcon icon={rocketOutline} />
-          </IonButton>
-        </IonRow>
-      </IonGrid>
+      <IonRow className="ion-justify-content-center ion-margin-top">
+        <IonButton type="submit">
+          <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
+          <IonIcon icon={rocketOutline} />
+        </IonButton>
+      </IonRow>
 
       {renderAlert()}
     </form>

@@ -5,7 +5,6 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonChip,
-  IonGrid,
   IonRow,
   IonText,
   IonButton,
@@ -79,17 +78,15 @@ export const MeasurementsList: FC<Props> = ({ measurements, refreshList }) => {
             <IonCardHeader>
               <IonCardSubtitle>{convertISODate(single.date)} </IonCardSubtitle>
               <IonCardContent style={{ paddingRight: 0, paddingLeft: 0, paddingBottom: 0 }}>
-                <IonGrid style={{ padding: 0 }}>
-                  <IonRow className="ion-wrap">
-                    {single.parts.map(part => (
-                      <div key={part.name} className="ion-text-capitalize">
-                        <IonChip>
-                          {part.name}: {part.value}
-                        </IonChip>
-                      </div>
-                    ))}
-                  </IonRow>
-                </IonGrid>
+                <IonRow className="ion-wrap">
+                  {single.parts.map(part => (
+                    <div key={part.name} className="ion-text-capitalize">
+                      <IonChip>
+                        {part.name}: {part.value}
+                      </IonChip>
+                    </div>
+                  ))}
+                </IonRow>
               </IonCardContent>
             </IonCardHeader>
 

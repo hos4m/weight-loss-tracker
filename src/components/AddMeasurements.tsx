@@ -2,7 +2,6 @@ import React, { FC, SyntheticEvent, useRef, useState } from "react";
 import {
   IonInput,
   IonItem,
-  IonGrid,
   IonRow,
   IonButton,
   IonLabel,
@@ -102,14 +101,12 @@ export const AddMeasurements: FC<Props> = ({ refreshList, hide }) => {
       <form onSubmit={onSubmit}>
         {renderParts()}
         {renderDatePicker()}
-        <IonGrid>
-          <IonRow className="ion-justify-content-center ion-margin-top">
-            <IonButton type="submit">
-              <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
-              <IonIcon icon={rocketOutline} />
-            </IonButton>
-          </IonRow>
-        </IonGrid>
+        <IonRow className="ion-justify-content-center ion-margin-top">
+          <IonButton type="submit">
+            <IonLabel style={{ marginRight: "1rem" }}>Add it</IonLabel>
+            <IonIcon icon={rocketOutline} />
+          </IonButton>
+        </IonRow>
       </form>
 
       {renderAlert()}

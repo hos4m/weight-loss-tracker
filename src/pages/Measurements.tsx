@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IonContent, IonPage, IonButton, IonGrid, IonRow, IonIcon, IonText } from "@ionic/react";
+import { IonContent, IonPage, IonButton, IonRow, IonIcon, IonText } from "@ionic/react";
 import { sadOutline } from "ionicons/icons";
 import useForceUpdate from "use-force-update";
 
@@ -32,19 +32,17 @@ export const Measurements: React.FC = () => {
   const renderList = () => {
     if (!measurements || measurements.length === 0) {
       return (
-        <IonGrid className="ion-margin-vertical ion-text-center ion-text-large">
-          <IonRow className="ion-justify-content-center">
-            <IonIcon
-              icon={sadOutline}
-              size="large"
-              className="ion-margin-vertical"
-              color="medium"
-            ></IonIcon>
-            <IonText color="medium" style={{ fontSize: "1.2rem", fontWeight: 500 }}>
-              No measurements yet, start by adding a new entry using the Add button above
-            </IonText>
-          </IonRow>
-        </IonGrid>
+        <IonRow className="ion-justify-content-center ion-text-center ion-text-large">
+          <IonIcon
+            icon={sadOutline}
+            size="large"
+            className="ion-margin-vertical"
+            color="medium"
+          ></IonIcon>
+          <IonText color="medium" style={{ fontSize: "1.2rem", fontWeight: 500 }}>
+            No measurements yet, start by adding a new entry using the Add button above
+          </IonText>
+        </IonRow>
       );
     } else {
       return <MeasurementsList measurements={measurements} refreshList={refreshList} />;
@@ -56,18 +54,16 @@ export const Measurements: React.FC = () => {
       <IonContent class="ion-padding">
         <DeleteAllConfirmationAlert />
 
-        <IonGrid>
-          <IonRow className="ion-justify-content-between">
-            <IonButton
-              expand="block"
-              fill="outline"
-              onClick={() => setAddSectionVisible(!addSectionVisible)}
-            >
-              Add
-            </IonButton>
-            {measurements.length > 0 && <DeleteAllButton />}
-          </IonRow>
-        </IonGrid>
+        <IonRow className="ion-justify-content-between">
+          <IonButton
+            expand="block"
+            fill="outline"
+            onClick={() => setAddSectionVisible(!addSectionVisible)}
+          >
+            Add
+          </IonButton>
+          {measurements.length > 0 && <DeleteAllButton />}
+        </IonRow>
 
         {renderAddSection()}
 
