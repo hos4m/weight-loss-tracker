@@ -77,6 +77,8 @@ export const PhotosList: FC<Props> = ({ photos, refreshList }) => {
 
   function deleteDayOnConfirm() {
     if (dayToDelete) deleteDayPhotos(dayToDelete);
+    setConfirmationAlertVisible(false);
+    setDayToDelete(null);
     refreshList();
   }
 
