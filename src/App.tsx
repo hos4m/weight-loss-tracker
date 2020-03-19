@@ -10,9 +10,13 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent
+  IonContent,
+  IonIcon,
+  IonRow,
+  IonText
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import { barbellOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -44,7 +48,11 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Weight Loss Tracker</IonTitle>
+            <IonTitle style={{ padding: "0 16px" }}>
+              <IonRow className="ion-justify-content-start ion-align-items-center">
+                <IonText>Shape Reboot</IonText>
+              </IonRow>
+            </IonTitle>
           </IonToolbar>
         </IonHeader>
 
