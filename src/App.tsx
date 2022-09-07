@@ -11,12 +11,10 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonIcon,
   IonRow,
   IonText
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { barbellOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
